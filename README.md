@@ -7,8 +7,8 @@
 
 دو رویکرد اصلی برای استخراج جدول داده-ستانده از SUT وجود دارد:
 
-1. **مدل B: محصول-به-محصول (Product-by-Product)** با فرضیه‌ی **تکنولوژی صنعت (Industry Technology Assumption)**
-2. **مدل D: صنعت-به-صنعت (Industry-by-Industry)** با فرضیه‌ی **ساختار فروش ثابت محصول (Commodity Sales Structure Assumption)**
+1. **مدل B: محصول-در-محصول (Product-by-Product)** با فرضیه‌ی **تکنولوژی بخش (Industry Technology Assumption)**
+2. **مدل D: فعالیت در فعالیت (Industry-by-Industry)** با فرضیه‌ی **ساختار فروش ثابت محصول (Commodity Sales Structure Assumption)**
 
 در این نوت‌بوک، مدل B پیاده‌سازی شده است.
 
