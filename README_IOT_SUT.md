@@ -1,79 +1,80 @@
+# 📊 Deriving the Input-Output Table (IOT) from the Supply and Use Table (SUT)
 
-# 📊 استخراج جدول داده-ستانده (IOT) از جدول عرضه و مصرف (SUT)
+This project aims to derive the **Input-Output Table (IOT)** from the **Supply and Use Table (SUT)**. The procedure is based on interindustry economic models and can be used for macroeconomic analysis, general equilibrium modeling, and industrial policy design.
 
-این پروژه با هدف استخراج **جدول داده-ستانده (Input-Output Table - IOT)** از **جدول عرضه و مصرف (Supply and Use Table - SUT)** پیاده‌سازی شده است. این فرآیند بر مبنای نظریه‌های اقتصاد بین‌بخشی انجام شده و می‌تواند در تحلیل‌های کلان اقتصادی، مدل‌های تعادل عمومی، و سیاست‌گذاری‌های صنعتی به‌کار رود.
+## 🧠 Theoretical Background
 
-## 🧠 مبانی نظری
+There are two main approaches to deriving the IOT from the SUT:
 
-دو رویکرد اصلی برای استخراج جدول داده-ستانده از SUT وجود دارد:
+1. **Model B: Product-by-Product**, based on the **Industry Technology Assumption (ITA)**
+2. **Model D: Industry-by-Industry**, based on the **Commodity Sales Structure Assumption (CSSA)**
 
-1. **مدل B: محصول-به-محصول (Product-by-Product)** با فرضیه‌ی **تکنولوژی صنعت (Industry Technology Assumption)**
-2. **مدل D: صنعت-به-صنعت (Industry-by-Industry)** با فرضیه‌ی **ساختار فروش ثابت محصول (Commodity Sales Structure Assumption)**
+This notebook implements **Model B**.
 
-در این نوت‌بوک، مدل B پیاده‌سازی شده است.
+## 📁 Data Used
 
-## 📁 داده‌های مورد استفاده
+Data is read from an Excel file with two main sheets:
 
-داده‌ها از فایل اکسل شامل دو شیت اصلی خوانده می‌شوند:
+### 1. Supply Table (`make_tbl_for_sym`)
+- \\( V^T \\): Transposed supply matrix (products by industries, \\(109 \\times 100\\))
+- \\( g^T \\): Total supply of each product (row sums)
+- \\( x \\): Gross output of products
+- \\( m \\): Imports
+- \\( q \\): Gross output at market prices
 
-### 1. جدول عرضه (`make_tbl_for_sym`)
-- \( V^T \): ماتریس عرضه محصول توسط صنایع (\(109 \times 100\))
-- \( g^T \): مجموع عرضه هر محصول (بردار سطری)
-- \( x \): تولید ناخالص کالاها
-- \( m \): واردات کالاها
-- \( q \): تولید ناخالص به قیمت بازار
+### 2. Use Table (`use_tbl_for_sym`)
+- \\( U_d \\): Intermediate consumption of products by industries
+- \\( Y_d \\): Final demand matrix
+- \\( W \\): Value added by industry
+- \\( w \\): Total value added
+- \\( y \\): Total final demand
 
-### 2. جدول مصرف (`use_tbl_for_sym`)
-- \( U_d \): ماتریس مصرف واسطه‌ای کالاها توسط صنایع
-- \( Y_d \): تقاضای نهایی
-- \( W \): ارزش افزوده صنایع
-- \( w \): مجموع ارزش افزوده
-- \( y \): مجموع تقاضای نهایی
+## 🧮 Steps for Constructing the Input-Output Table
 
-## 🧮 مراحل محاسبه جدول داده-ستانده
-
-### 1. محاسبه ماتریس تکنولوژی صنعت \( T \)
-
-$$
-T = V^T \cdot \text{diag}(g^T)^{-1}
-$$
-
-### 2. محاسبه مصرف واسطه‌ای صنعت‌محور \( Z \)
+### 1. Compute the Industry Technology Matrix \\( T \\)
 
 $$
-Z = T \cdot U_d
+T = V^T \\cdot \\text{diag}(g^T)^{-1}
 $$
 
-### 3. محاسبه تقاضای نهایی صنعت‌محور \( f \)
+### 2. Compute Intermediate Demand Matrix \\( Z \\)
 
 $$
-f = T \cdot Y_d
+Z = T \\cdot U_d
 $$
 
-### 4. محاسبه ماتریس ضرایب فنی \( A \)
+### 3. Compute Final Demand Vector \\( f \\)
 
 $$
-A = Z \cdot \text{diag}(x)^{-1}
+f = T \\cdot Y_d
 $$
 
-### 5. محاسبه ماتریس لئونتیف \( L \)
+### 4. Compute the Technical Coefficients Matrix \\( A \\)
+
+$$
+A = Z \\cdot \\text{diag}(x)^{-1}
+$$
+
+### 5. Compute the Leontief Inverse Matrix \\( L \\)
 
 $$
 L = (I - A)^{-1}
 $$
 
-که در آن \( I \) ماتریس همانی است.
+where \\( I \\) is the identity matrix.
 
-## ✅ خروجی‌ها
+## ✅ Outputs
 
-- جدول داده-ستانده (\( Z \))
-- تقاضای نهایی (\( f \))
-- ماتریس ضرایب فنی (\( A \))
-- ماتریس معکوس لئونتیف (\( L \))
+- Input-Output table (\\( Z \\))
+- Final demand vector (\\( f \\))
+- Technical coefficients matrix (\\( A \\))
+- Leontief inverse matrix (\\( L \\))
 
-## 📚 منابع نظری
+## 📚 Theoretical References
 
 - Eurostat Manual of Supply, Use and Input-Output Tables
 - United Nations SNA 2008
 - Ten Raa, Thijs (2005). *The Economics of Input-Output Analysis*
+
+
 
